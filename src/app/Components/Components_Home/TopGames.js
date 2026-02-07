@@ -16,7 +16,7 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 
-function TopGames({ Title , index }) {
+function TopGames({ Title , index , time }) {
 
     const [games, setGames] = useState([]);
     const [swiperInstance, setSwiperInstance] = useState(null);
@@ -28,11 +28,23 @@ function TopGames({ Title , index }) {
           setGames(data);
         };
         getGames();
-        console.log(games)
-
       }, []);
+
+      useEffect(() => {
+        const interval = setInterval(() => {
+            if (swiperInstance) {
+                if (swiperInstance.isEnd) {
+                    swiperInstance.slideTo(0);
+                } else {
+                    swiperInstance.slideNext();
+                }
+            }
+        }, time);
+
+        return () => clearInterval(interval)
+
+      },[swiperInstance])
       
-      console.log(games)
 
   return (
     <div className='m-10'>

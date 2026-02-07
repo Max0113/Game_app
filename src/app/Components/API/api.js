@@ -21,20 +21,23 @@ export const Top10Games = async ( index ) => {
 
 // Testing PLACE 
 
-// https://api.rawg.io/api/games?key=4d4c35e61fa845e49972f309dbd3b783&platforms=4,18&ordering=-metacritic&page_size=10
+// https://api.rawg.io/api/games?key=4d4c35e61fa845e49972f309dbd3b783&search=${w}
 
-// export const SearchGames = async (nameGame) => {
-//   try {
-//     const URL = `https://api.rawg.io/api/games?key=${API_KEY}&search=${nameGame}&page_size=1`;
-//     const response = await fetch(URL);
-//     if (!response.ok) throw new Error('Network response was not ok');
-//     const data = await response.json();
-//     return data.results; 
-//   } catch (error) {
-//     console.error("Error fetching games:", error);
-//     return []; 
-//   }
-// };
+
+export const SearchGames = async (nameGame) => {
+  try {
+    const URL = `https://api.rawg.io/api/games?key=${API_KEY}&search=${nameGame}`;
+    const response = await fetch(URL);
+    if (!response.ok) throw new Error('Network response was not ok');
+    const data = await response.json();
+    return data.results; 
+  } catch (error) {
+    console.error("Error fetching games:", error);
+    return []; 
+  }
+};
+
+
 
 // export const GetGames = async (nameGame) => {
 //   const games = await SearchGames(nameGame);

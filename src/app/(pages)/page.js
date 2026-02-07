@@ -9,8 +9,8 @@ function page() {
   return (
     <>
       <SeactionBar></SeactionBar>
-      <TopGames Title={"Top Games Pc"} index={true} ></TopGames>
-      <TopGames Title={"Top Games Ps5"} index={false} ></TopGames>
+      <TopGames time={4800} Title={"Top Games Pc"} index={true} ></TopGames>
+      <TopGames time={5000} Title={"Top Games Ps5"} index={false} ></TopGames>
     </>
   )
 }
