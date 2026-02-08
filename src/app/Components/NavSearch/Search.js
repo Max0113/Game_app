@@ -42,7 +42,7 @@ function SearchBar() {
       try {
         const data = await SearchGames(onSearch);
         setGames(data || []);  
-        console.log(data[0]?.parent_platforms);
+        console.log(data);
       } catch (error) {
         console.error("Error fetching games:", error);
         setGames([]);
@@ -101,7 +101,7 @@ function SearchBar() {
       >
         {games.map((element, index) => (
           <Link 
-            href="\" // add Link
+            href={`\ ${element.id}`} // add Link
           > 
             <Slide_Search 
               key={element.id || index}  
