@@ -14,12 +14,8 @@ function SlidePlaystationExclusives({ title , url , id }) {
         fetchdata()
     },[])
 
-    useEffect(() => {
-        console.log('description :', game)
-    },[game])
-
   return (
-    <div className='bg-gray-500 flex justify-between h-75 rounded-2xl'>
+    <div className='bg-zinc-800 flex justify-between h-75 rounded-2xl'>
         <div className='p-10 flex flex-col gap-5 justify-center'>
             <h1 className='text-white font-bold text-[1.3rem]'>{title}</h1> 
             <div className='w-70 h-[0.3vh] bg-[#fff]'></div>

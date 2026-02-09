@@ -20,24 +20,32 @@ function PlaystationExclusives() {
     const [games,Setgames] = useState([])
     const [swiperInstance, setSwiperInstance] = useState(null);
     const [activeIndex, setActiveIndex] = useState(0);
+    const [loading , setLoading] = useState(false); 
 
     useEffect(() => {
+
+        setLoading(true)
+
         const fetchFunction = async () => {
-            const data = await PlaystationExclusivesAPI()
-            Setgames(data)
+            try {
+                const data = await PlaystationExclusivesAPI()
+                Setgames(data || [])
+            } catch(error) {
+                console.error(error)
+                Setgames([])
+            } finally {
+                setLoading(false)
+            }
         }
         fetchFunction()
     },[])
 
-    useEffect(() => {
-        console.log("Games updated:", games)
-    }, [games])
 
 
 
     return (
         <div className='m-10'>
-            <div className='flex justify-between items-center text-center px-7'>
+            <div className='flex justify-between items-center text-center px-7 pb-3'>
                 <h1 className='text-[2.3rem] font-bold text-white pb-3'>Playstation Exclusives</h1>
                 <p className='text-[1rem] font-sm text-[#ffffff] pb-3'><Link href="/Games" className='flex items-center gap-3'>Browse All Games  <FaArrowRightLong></FaArrowRightLong></Link></p>
             </div>
@@ -48,11 +56,13 @@ function PlaystationExclusives() {
                 onSwiper={(swiper) => setSwiperInstance(swiper)}
                 onSlideChange={(swiper) => setActiveIndex(swiper.activeIndex)}
             >
-                {games.map((self,index)=>(
+                {!loading ? (games.map((self,index)=>(
                         <SwiperSlide key={index}>
                             <SlidePlaystationExclusives key={index} title={self.name} id={self.id} url={self.background_image}></SlidePlaystationExclusives>
-                        </SwiperSlide>
-                ))}
+                        </SwiperSlide>)
+                )) : (<div className="flex items-center justify-center py-6 text-white h-60">
+                <span className="animate-spin h-10 w-10 border-2 border-white/30 border-t-white rounded-full"></span>
+              </div>)}
             </Swiper>
         </div>
     )

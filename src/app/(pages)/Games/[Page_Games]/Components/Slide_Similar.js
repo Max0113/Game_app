@@ -9,17 +9,23 @@ function Slide2({ game }) {
       {/* WRAPPER: This is the magic part. 
           When we hover this container, everything inside rotates together.
       */}
-      <div className='group relative cursor-pointer transition-transform duration-300 ease-out hover:scale-102 active:scale-95'>
+      <div className='group relative cursor-pointer transition-transform duration-300 ease-out hover:scale-[1.02] active:scale-95'>
         
         {/* OVERLAY: Slides in from the left and stays perfectly synced with the image */}
         <div className='absolute inset-0 w-0 group-hover:w-full transition-all duration-300 z-30 h-110 rounded-3xl bg-[#ff7878] opacity-50 pointer-events-none'></div>
         
         {/* IMAGE */}
-        <img 
-          className='w-full h-110 z-10 rounded-3xl object-cover' 
-          src={game.background_image} 
-          alt={game.name} 
-        />
+        {game.background_image ? (
+          <img 
+            className='w-full h-110 z-10 rounded-3xl object-cover' 
+            src={game.background_image} 
+            alt={game.name || "Game cover"} 
+          />
+        ) : (
+          <div className='w-full h-110 z-10 rounded-3xl bg-neutral-800 flex items-center justify-center text-white/70 text-sm'>
+            No image
+          </div>
+        )}
         
 
         {/* Optional: Add a small '+' icon like your screenshot */}

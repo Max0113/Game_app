@@ -29,6 +29,7 @@ export const Top10Games = async ( index ) => {
 export const SearchGames = async (nameGame) => {
   try {
     const URL = `https://api.rawg.io/api/games?key=${API_KEY}&search=${nameGame}`;
+    // https://api.rawg.io/api/games?key=4d4c35e61fa845e49972f309dbd3b783&search=gtav&ordering=-metacritic&page_size=1
     const response = await fetch(URL);
     if (!response.ok) throw new Error('Network response was not ok');
     const data = await response.json();
@@ -56,6 +57,25 @@ export const GetGamesbyId = async (id) => {
   }
 };
 
+export const getGameScreenshots = async (id) => {
+  const res = await fetch(
+    `https://api.rawg.io/api/games/${id}/screenshots?key=${API_KEY}`
+  );
+  const data = await res.json();
+  return data.results; // 👈 IMPORTANT
+};
+
+export const getSimilarGames = async (page) => {
+    try {
+        const response = await fetch(`https://api.rawg.io/api/games/${page}/game-series?key=${API_KEY}&page_size=10`);
+        // https://api.rawg.io/api/games/3498/game-series?key=4d4c35e61fa845e49972f309dbd3b783&page_size=10
+        const data = await response.json();
+        return data.results; // This returns the array of similar games
+    } catch (error) {
+        console.error("Error fetching similar games:", error);
+        return [];
+    }
+}
 
 // Fetch for PlayStationExclusive
 

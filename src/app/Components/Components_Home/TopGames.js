@@ -1,5 +1,5 @@
 "use client"
-import React , { useState , useEffect } from 'react'
+import React , { useState , useEffect, cache } from 'react'
 import Link from 'next/link'
 import { Top10Games } from '../API/api'
 import Slide2 from './Slide_Games'
@@ -21,11 +21,21 @@ function TopGames({ Title , index , time }) {
     const [games, setGames] = useState([]);
     const [swiperInstance, setSwiperInstance] = useState(null);
     const [activeIndex, setActiveIndex] = useState(0);
+    const [loading,setLoading] = useState(false)
     
       useEffect(() => {
+
+        setLoading(true)
         const getGames = async () => {
-          const data = await Top10Games(index);
-          setGames(data);
+          try {
+            const data = await Top10Games(index);
+            setGames(data || []);
+          } catch (error) {
+            console.error(error);
+            setGames([]);
+          } finally {
+            setLoading(false)
+          }
         };
         getGames();
       }, []);
@@ -59,12 +69,16 @@ function TopGames({ Title , index , time }) {
             onSwiper={(swiper) => setSwiperInstance(swiper)}
             onSlideChange={(swiper) => setActiveIndex(swiper.activeIndex)}
         >
-          {
+          { !loading ? (
             games.map((game , index) => ( 
               <SwiperSlide key={index}>
                   <Slide2 key={index} game={game}></Slide2>
               </SwiperSlide> 
-            )) 
+            ))  ) : (
+              <div className="flex items-center justify-center py-6 text-white h-100">
+                <span className="animate-spin h-10 w-10 border-2 border-white/30 border-t-white rounded-full"></span>
+              </div>
+            )
           }
         </Swiper>
     </div>

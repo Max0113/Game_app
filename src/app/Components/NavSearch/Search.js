@@ -11,6 +11,8 @@ function SearchBar() {
   const [query, setQuery] = useState("");
   const [onSearch, setOnSearch] = useState("");
   const [isActive, setIsActive] = useState(false);
+  const [loading, setLoading] = useState(false);
+
   
   const containerRef = useRef(null);  
 
@@ -36,16 +38,18 @@ function SearchBar() {
 
 
   useEffect(() => {
-    if (!onSearch) return;  
+ 
+    setLoading(true)
     
     const loadGames = async () => {
       try {
         const data = await SearchGames(onSearch);
         setGames(data || []);  
-        console.log(data);
       } catch (error) {
         console.error("Error fetching games:", error);
         setGames([]);
+      } finally {
+        setLoading(false)
       }
     };
     
@@ -99,20 +103,27 @@ function SearchBar() {
         [&::-webkit-scrollbar-thumb]:hover:bg-blue-500
         rounded-xl absolute w-full max-h-96 z-50 px-6 py-3 bg-[#6363633f] backdrop-blur-3xl`}
       >
-        {games.map((element, index) => (
-          <Link 
-            href={`\ ${element.id}`} // add Link
-          > 
-            <Slide_Search 
-              key={element.id || index}  
-              title={element.name}
-              img={element.background_image}
-              rating={element.rating}
-              released={element.released}
-              platforms={element.parent_platforms || []}  
-            />
-          </Link>
-        ))}
+        {
+        
+        !loading ? (games.map((element, index) => (
+            <Link 
+              href={`/Games/${element.id}`} // add Link
+              key={element.id || index}
+            > 
+              <Slide_Search 
+                key={element.id || index}  
+                title={element.name}
+                img={element.background_image}
+                rating={element.rating}
+                released={element.released}
+                platforms={element.parent_platforms || []}  
+              />
+            </Link> 
+        )) )
+        : (<div className="flex items-center justify-center py-6 text-white">
+            <span className="animate-spin h-6 w-6 border-2 border-white/30 border-t-white rounded-full"></span>
+          </div>)
+        }
       </div>
     </form>
   );

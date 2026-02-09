@@ -1,8 +1,18 @@
+"use client"
 import React from 'react';
+
+// icon 
+import { FaSteam } from "react-icons/fa";
+import { FaPlaystation } from "react-icons/fa";
+import { IoLogoXbox } from "react-icons/io";
+import { IoLogoGooglePlaystore } from "react-icons/io5";
+import { IoLogoAppleAppstore } from "react-icons/io5";
+import { FaLinux } from "react-icons/fa";
+import { BsNintendoSwitch } from "react-icons/bs";
 
 function Slide_Search({ title, img, rating, released, platforms }) {
   return (
-    <div className='flex bg-[#ff5353] my-3 p-4 rounded-xl hover:bg-[#ff4444] hover:scale-102 transition-all duration-400 cursor-pointer'>
+    <div className='flex bg-[#4a4a4a] my-3 p-4 rounded-xl hover:bg-[#8e8d8d] hover:scale-102 transition-all duration-400 cursor-pointer'>
       <div>
         {img ? <img 
           src={img || '/placeholder.jpg'}  
@@ -18,12 +28,15 @@ function Slide_Search({ title, img, rating, released, platforms }) {
           <span className='text-sm'>⭐ {rating || 'N/A'}</span>
         </div>
         <div className='flex flex-wrap gap-2'>
-          {platforms?.map((platform, index) => (  
-            <span 
-              key={index} 
-              className='bg-gray-700 px-2 py-1 rounded-xl text-xs font-lg text-white'
-            >
-              {platform.platform?.name || platform.name} 
+          {platforms?.map((item, index) => (  
+            <span key={index} className="ml-0 *:text-[1rem]">
+                {item.platform?.name === "PC" && <FaSteam className=' text-white' />}
+                {item.platform.name === "PlayStation" && <FaPlaystation className=' text-white' />}
+                {item.platform.name === "Xbox" && <IoLogoXbox className=' text-white' />}
+                {item.platform.name === "Android" && <IoLogoGooglePlaystore className=' text-white' />}
+                {item.platform.name === "Apple Macintosh" && <IoLogoAppleAppstore className=' text-white' />}
+                {item.platform.name === "Linux" && <FaLinux className=' text-white' />}
+                {item.platform.name === "Nintendo" && <BsNintendoSwitch className=' text-white' />}
             </span>
           ))}
         </div>
