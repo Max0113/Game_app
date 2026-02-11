@@ -89,5 +89,4 @@ game_app/
         └── 📄 api-key.js
 
 
-## Naming Rules
 
