@@ -1,11 +1,11 @@
 'use client';
 import React, { useEffect, useState, useRef } from 'react';  
 import { FaSearch, FaTimes } from "react-icons/fa";
-import { SearchGames } from '../API/api';
-import Slide_Search from './Slide_Search';
+import { SearchGames } from '../../../lib/api';
+import ResultSearch from './ResultSearch';
 import Link from 'next/link'
 
-function SearchBar() {
+function Search() {
 
   const [games, setGames] = useState([]);  
   const [query, setQuery] = useState("");
@@ -110,7 +110,7 @@ function SearchBar() {
               href={`/Games/${element.id}`} // add Link
               key={element.id || index}
             > 
-              <Slide_Search 
+              <ResultSearch 
                 key={element.id || index}  
                 title={element.name}
                 img={element.background_image}
@@ -129,4 +129,4 @@ function SearchBar() {
   );
 }
 
-export default SearchBar;
+export default Search;

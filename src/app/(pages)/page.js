@@ -1,8 +1,8 @@
 "use client"
 import React , { useState , useEffect } from 'react'
-import SeactionBar from '../Components/Components_Home/SeactionBar'
-import TopGames from '../Components/Components_Home/TopGames'
-import PlaystationExclusives from '../Components/Components_Home/PlaystationExclusives'
+import SeactionBar from '@/Components/home/hero/HeroCarousel'
+import TopGames from '@/Components/home/top-games/TopGames'
+import PlaystationExclusives from '@/Components/home/playstation-exclusives/PlaystationExclusives'
 
 function page() {
 

@@ -1,6 +1,6 @@
 "use client"
 import React , { useEffect , useState } from 'react'
-import { PlaystationExclusivesAPI } from '../API/api'
+import { PlaystationExclusivesAPI } from '../../../lib/api'
 import SlidePlaystationExclusives from './SlidePlaystationExclusives';
 import Link from 'next/link'
 

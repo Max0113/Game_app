@@ -1,7 +1,7 @@
 import React from 'react'
 import Search from './Search'
 
-function SearchBar() {
+function TopBar() {
   return (
     <div className='flex justify-between items-center my-6 mx-15'>
         <Search />
@@ -13,4 +13,4 @@ function SearchBar() {
   )
 }
 
-export default SearchBar
+export default TopBar

@@ -1,8 +1,8 @@
 "use client"
 import React , { useState , useEffect, cache } from 'react'
 import Link from 'next/link'
-import { Top10Games } from '../API/api'
-import Slide2 from './Slide_Games'
+import { Top10Games } from '../../../lib/api'
+import SlideGames from './SlideGames'
 import { FaArrowRightLong } from "react-icons/fa6";
 
 
@@ -72,7 +72,7 @@ function TopGames({ Title , index , time }) {
           { !loading ? (
             games.map((game , index) => ( 
               <SwiperSlide key={index}>
-                  <Slide2 key={index} game={game}></Slide2>
+                  <SlideGames key={index} game={game}></SlideGames>
               </SwiperSlide> 
             ))  ) : (
               <div className="flex items-center justify-center py-6 text-white h-100">

@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { IoMdAddCircleOutline } from "react-icons/io";
 
 
-function Slide2({ game }) {
+function SlideGames({ game }) {
   return (
     <div className='flex flex-col gap-2 my-3'>
       {/* WRAPPER: This is the magic part. 
@@ -49,4 +49,4 @@ function Slide2({ game }) {
   )
 }
 
-export default Slide2
+export default SlideGames

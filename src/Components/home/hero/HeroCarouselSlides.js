@@ -5,7 +5,7 @@ import { useGSAP } from "@gsap/react";
 
 gsap.registerPlugin(useGSAP);
 
-function Slide({ link, logo, Title, Text, isActive }) {
+function HeroCarouselSlides({ link, logo, Title, Text, isActive }) {
     const container = useRef();
 
     useGSAP(() => {
@@ -50,4 +50,4 @@ function Slide({ link, logo, Title, Text, isActive }) {
     )
 }
 
-export default Slide
+export default HeroCarouselSlides;

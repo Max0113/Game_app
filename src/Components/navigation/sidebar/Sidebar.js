@@ -10,7 +10,7 @@ import { usePathname } from 'next/navigation';
 
 
 
-function Navbar() {
+function Sidebar() {
 
   const pathName = usePathname()
   
@@ -22,22 +22,22 @@ function Navbar() {
     },
     {
       title : "Category",
-      link : "/Category",
+      link : "/category",
       icon : <BsFillGrid1X2Fill className='h-4 w-4 max-lg:h-5 max-lg:w-5' />
     },
     {
       title : "Games",
-      link : "/Games",
+      link : "/games",
       icon : <BsFillGrid1X2Fill className='h-4 w-4 max-lg:h-5 max-lg:w-5' />
     },
     {
       title : "Wlshlist",
-      link : "/Wlshlist",
+      link : "/wlshlist",
       icon : <FaHeart className='h-5 w-5 max-lg:h-6 max-lg:w-6'/>
     },
     {
       title : "Friends",
-      link : "/Friends",
+      link : "/friends",
       icon : <FaUsers className='h-5 w-5 max-lg:h-6 max-lg:w-6'/>
     },
   ]
@@ -59,4 +59,4 @@ function Navbar() {
   )
 }
 
-export default Navbar
+export default Sidebar

@@ -1,5 +1,5 @@
-import Navbar from "../Components/NavBar/Navbar";
-import SearchBar from '../Components/NavSearch/SearchBar'
+import Sidebar from "@/Components/navigation/sidebar/Sidebar";
+import TopBar from '@/Components/navigation/top-bar/TopBar'
 
 
 export const metadata = {
@@ -11,11 +11,10 @@ export default function GridLayout({ children }) {
   return (
     <div className="grid grid-cols-[270px_1fr] h-screen w-full max-lg:grid-cols-[90px_1fr] transition-all duration-200">
       <div className="shadow-lg">
-        <Navbar />
+        <Sidebar />
       </div>
-
       <div className="h-full overflow-y-auto">
-        <SearchBar></SearchBar> 
+        <TopBar></TopBar> 
         {children}
       </div>
     </div>

@@ -1,6 +1,6 @@
 import React from 'react'
 
-const API_KEY = '4d4c35e61fa845e49972f309dbd3b783';
+const API_KEY = 'd0ad34359202419fb94f193886b57e8c';
 
 
 // Fetchin 10 Top Games in PlayStation and Pc
@@ -29,7 +29,7 @@ export const Top10Games = async ( index ) => {
 export const SearchGames = async (nameGame) => {
   try {
     const URL = `https://api.rawg.io/api/games?key=${API_KEY}&search=${nameGame}`;
-    // https://api.rawg.io/api/games?key=4d4c35e61fa845e49972f309dbd3b783&search=gtav&ordering=-metacritic&page_size=1
+    // https://api.rawg.io/api/games?key=b6fe510c02354ceaa226cbf650bc367d&search=gtav&ordering=-metacritic&page_size=1
     const response = await fetch(URL);
     if (!response.ok) throw new Error('Network response was not ok');
     const data = await response.json();
@@ -40,7 +40,7 @@ export const SearchGames = async (nameGame) => {
   }
 };
 
-// Fetchin By Id
+// Fetchin By Id Game
 
 export const GetGamesbyId = async (id) => {
   try {
@@ -57,17 +57,24 @@ export const GetGamesbyId = async (id) => {
   }
 };
 
+// Fechin Game Screenshots by id
 export const getGameScreenshots = async (id) => {
-  const res = await fetch(
-    `https://api.rawg.io/api/games/${id}/screenshots?key=${API_KEY}`
-  );
-  const data = await res.json();
-  return data.results; // 👈 IMPORTANT
+  try {
+    const URL = `https://api.rawg.io/api/games/${id}/screenshots?key=${API_KEY}`;
+    const res = await fetch(URL);
+    if (!res.ok) throw new Error('Failed to fetch screenshots');
+    const data = await res.json();
+    return data.results || []; 
+  } catch (error) {
+    console.error("Screenshot Error:", error);
+    return [];
+  }
 };
 
-export const getSimilarGames = async (page) => {
+// Fechin Games Similar  by id
+export const getSimilarGames = async (id) => {
     try {
-        const response = await fetch(`https://api.rawg.io/api/games/${page}/game-series?key=${API_KEY}&page_size=10`);
+        const response = await fetch(`https://api.rawg.io/api/games/${id}/game-series?key=${API_KEY}&page_size=10`);
         // https://api.rawg.io/api/games/3498/game-series?key=4d4c35e61fa845e49972f309dbd3b783&page_size=10
         const data = await response.json();
         return data.results; // This returns the array of similar games
@@ -77,7 +84,7 @@ export const getSimilarGames = async (page) => {
     }
 }
 
-// Fetch for PlayStationExclusive
+// Fetch for PlayStation Exclusive
 
 function isPlayStationExclusive(game) {
   const platforms = game.platforms.map(p => p.platform.slug);

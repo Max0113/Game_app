@@ -1,6 +1,6 @@
 "use client"
 import React , {useEffect , useState} from 'react'
-import {  GetGamesbyId  } from '../API/api'
+import {  GetGamesbyId  } from '../../../lib/api'
 
 function SlidePlaystationExclusives({ title , url , id }) {
 

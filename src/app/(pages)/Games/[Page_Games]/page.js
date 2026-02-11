@@ -2,9 +2,10 @@
 import React, { useEffect, useState } from 'react'
 import { usePathname } from "next/navigation";
 import Link from 'next/link'; // Import Link for navigation
-import { GetGamesbyId } from "../../../Components/API/api"
-import ImgeSlide from "./Components/ImgeSlide"
-import SimilarGames from './Components/SimilarGames'
+import { GetGamesbyId } from "@/lib/api"
+import ImgeSlide from "@/Components/games/pages-games/ImgeSlide"
+import SimilarGames from '@/Components/games/pages-games/similar-games/SimilarGames'
+
 
 // icons
 import { FaSteam, FaPlaystation, FaLinux } from "react-icons/fa";

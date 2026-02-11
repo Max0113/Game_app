@@ -1,7 +1,7 @@
 "use client"
 import React , { useState , useEffect } from 'react'
 import Link from 'next/link'
-import { getSimilarGames } from '../../../../Components/API/api'
+import { getSimilarGames } from '../../../../lib/api'
 import Slide_Similar from './Slide_Similar'
 import { FaArrowRightLong } from "react-icons/fa6";
 

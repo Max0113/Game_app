@@ -10,7 +10,7 @@ import { IoLogoAppleAppstore } from "react-icons/io5";
 import { FaLinux } from "react-icons/fa";
 import { BsNintendoSwitch } from "react-icons/bs";
 
-function Slide_Search({ title, img, rating, released, platforms }) {
+function ResultSearch({ title, img, rating, released, platforms }) {
   return (
     <div className='flex bg-[#4a4a4a] my-3 p-4 rounded-xl hover:bg-[#8e8d8d] hover:scale-102 transition-all duration-400 cursor-pointer'>
       <div>
@@ -45,4 +45,4 @@ function Slide_Search({ title, img, rating, released, platforms }) {
   );
 }
 
-export default Slide_Search;
+export default ResultSearch;
