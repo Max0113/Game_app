@@ -60,7 +60,7 @@ function TopGames({ Title , index , time }) {
     <div className='m-10'>
         <div className='flex justify-between items-center text-center px-7'>
           <h1 className='text-[2.3rem] font-bold text-white pb-3'>{`${Title}`}</h1>
-          <p className='text-[1rem] font-sm text-[#ffffff] pb-3'><Link href="/Games" className='flex items-center gap-3'>Browse All Games  <FaArrowRightLong></FaArrowRightLong></Link></p>
+          <p className='text-[1rem] font-sm text-[#ffffff] pb-3'><Link href="/games" className='flex items-center gap-3'>Browse All Games  <FaArrowRightLong></FaArrowRightLong></Link></p>
         </div>
         <Swiper
             modules={[Navigation, Pagination, Scrollbar, A11y]}

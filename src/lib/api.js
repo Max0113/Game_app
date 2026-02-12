@@ -3,6 +3,9 @@ import React from 'react'
 const API_KEY = 'd0ad34359202419fb94f193886b57e8c';
 
 
+// https://api.rawg.io/api/games?key=d0ad34359202419fb94f193886b57e8c&page=1&page_size=12
+
+
 // Fetchin 10 Top Games in PlayStation and Pc
 
 
@@ -112,4 +115,20 @@ export const PlaystationExclusivesAPI = async () => {
     return []; 
   }
 };
+
+
+// Fetch 20 Games for Page 
+
+export const PagesGames = async (index) => {
+  try {
+    const URL = `https://api.rawg.io/api/games?key=${API_KEY}&page=${index}&page_size=12`
+    const response = await fetch(URL)
+    const data = await response.json()
+    return data.results
+  }catch (error) {
+    console.error(error)
+    return []
+  }
+}
+
 

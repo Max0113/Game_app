@@ -107,7 +107,7 @@ function Search() {
         
         !loading ? (games.map((element, index) => (
             <Link 
-              href={`/Games/${element.id}`} // add Link
+              href={`/games/${element.id}`} // add Link
               key={element.id || index}
             > 
               <ResultSearch 
