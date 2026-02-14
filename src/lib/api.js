@@ -124,10 +124,12 @@ export const PagesGames = async (index) => {
     const URL = `https://api.rawg.io/api/games?key=${API_KEY}&page=${index}&page_size=12`
     const response = await fetch(URL)
     const data = await response.json()
-    return data.results
+    const results = data?.results || []
+    const totalPages = Math.max(1, Math.ceil((data?.count || 0) / 12))
+    return { results, totalPages }
   }catch (error) {
     console.error(error)
-    return []
+    return { results: [], totalPages: 1 }
   }
 }
 

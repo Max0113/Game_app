@@ -4,16 +4,23 @@ import { PagesGames } from '@/lib/api'
 import SlideGames from '@/Components/games/SlideGames'
 
 function Page() {
+
+  // variable & useState 
+
   const [games, setGames] = useState([])
+  const [IndexPage,setIndexPage] = useState(1)
+  const [totalPages, setTotalPages] = useState(1)
   
-  // 1. On remplace activeIndex par un tableau selectedTags
+  const [isLoding,SetIsLoding] = useState(false)
   const [selectedTags, setSelectedTags] = useState([])
 
-  const tags = [
+  const tags_Array = [
     "Action", "Indie", "Adventure", "RPG", "Strategy",
     "Shooter", "Casual", "Simulation", "Puzzle", "Arcade",
     "Platformer", "Massively Multiplayer", "Racing", "Sports", "Fighting"
   ]
+
+  // methode 
 
   const toggleTag = (tagName) => {
     setSelectedTags((prevSelected) => {
@@ -25,27 +32,45 @@ function Page() {
     });
   };
 
+  // useEffects
+
+  useEffect(() => {
+    setIndexPage(1)
+  }, [selectedTags])
+
   useEffect(() => {
     const fetching = async () => {
-      const data = await PagesGames(1)
-      setGames(data)
-      console.log(data)
+      SetIsLoding(false)
+      try{
+        const { results, totalPages } = await PagesGames(IndexPage)
+        setTotalPages(totalPages)
+        const filtered = results.filter(game =>
+          game.tags.some(tag =>
+            selectedTags.includes(tag.name)
+          )
+        )
+        setGames(selectedTags.length > 0 ? filtered : results)
+      }catch{
+        setGames([])
+      } finally {
+        SetIsLoding(true)
+      }
     }
     fetching()
-  }, [selectedTags]); 
+  }, [selectedTags,IndexPage]); 
 
   return (
     <div className="relative ml-10">
       <h1 className="text-white font-extrabold text-[2.3rem]">Games From Genres</h1>
-      <div className="grid grid-cols-[200px_1fr] gap-2 mt-5">
-        <div className='flex flex-col gap-1 py-5 justify-center items-center bg-gray-700 rounded-2xl'>
-          {tags.map((self, index) => (
+      <div className="grid grid-cols-[220px_1fr] gap-2 mt-5">
+        <div className='flex flex-col gap-1.5  justify-center items-center bg-gray-700 rounded-2xl h-185'>
+          {tags_Array.map((self, index) => (
             <button 
               key={index} 
               onClick={() => toggleTag(self)} 
-              className={`text-white w-[85%] py-2 rounded-xl transition-all ${
+              className={`text-white w-[85%] py-2 rounded-3xl transition-all ${
                 selectedTags.includes(self) 
-                ? "bg-red-500 border-2 border-white font-bold" 
+                ? "bg-[#ff7878] font-bold" 
                 : "hover:bg-gray-500"
               }`}
             >
@@ -56,8 +81,65 @@ function Page() {
             </button>
           ))}
         </div>
-        <div className='bg-red-900/20 h-100 rounded-2xl w-[95%] p-4 text-white'>
-           <SlideGames></SlideGames>
+        <div className=' rounded-2xl w-[95%] p-4 text-white py-0 mb-10'>
+          <div className='flex flex-wrap justify-center gap-8'>
+           {isLoding ? (games.map((game,index) => (
+              <SlideGames key={index}  url={game.background_image} title={game.name} platform={game.parent_platforms} rating={game.rating}></SlideGames>
+           )) ) : (games.map((game,index) => (
+              <div key={index} className="h-80 w-80 rounded-2xl bg-white/5 animate-pulse" />
+           )) )}
+          </div>
+          <div className="flex gap-2 justify-center mt-6">
+
+              {/* First page */}
+              <button
+                onClick={() => setIndexPage(1)}
+                className="bg-black/20 w-10 h-10 rounded-full"
+              >
+                1
+              </button>
+
+              {/* Middle pages */}
+              {[IndexPage - 1, IndexPage, IndexPage + 1]
+                .filter((p, i, arr) => p > 1 && p < totalPages && arr.indexOf(p) === i)
+                .map(p => {
+                  if(p > 1 && p < 100) {
+                   return ( <button
+                    key={p}
+                    onClick={() => setIndexPage(p)}
+                    className={`w-10 h-10 rounded-full ${
+                      p === IndexPage
+                        ? "bg-red-500 text-white"
+                        : "bg-black/20"
+                    }`}
+                  >
+                    {p}
+                  </button> ); }
+                  else  {
+                   return ( <button
+                    key={p}
+                    onClick={() => setIndexPage(p)}
+                    className={`w-15 h-10 rounded-full ${
+                      p === IndexPage
+                        ? "bg-red-500 text-white"
+                        : "bg-black/20"
+                    }`}
+                  >
+                    {p}
+                  </button> ); }
+                })}
+
+              <span className="text-3xl">...</span>
+
+              {/* Last page */}
+              <button
+                onClick={() => setIndexPage(totalPages)}
+                className="bg-black/20 w-20 h-10 rounded-full"
+              >
+                {totalPages}
+              </button>
+
+            </div>
         </div>
       </div>
     </div>
