@@ -30,6 +30,7 @@ function TopGames({ Title , index , time }) {
           try {
             const data = await Top10Games(index);
             setGames(data || []);
+            console.log(data)
           } catch (error) {
             console.error(error);
             setGames([]);
@@ -38,7 +39,7 @@ function TopGames({ Title , index , time }) {
           }
         };
         getGames();
-      }, []);
+      }, [index]);
 
       useEffect(() => {
         const interval = setInterval(() => {
@@ -53,7 +54,7 @@ function TopGames({ Title , index , time }) {
 
         return () => clearInterval(interval)
 
-      },[swiperInstance])
+      },[swiperInstance, time])
       
 
   return (

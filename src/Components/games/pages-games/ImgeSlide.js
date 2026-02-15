@@ -1,5 +1,6 @@
 "use client"
 import React , { useState , useEffect } from 'react'
+import Image from 'next/image';
 
 // import Swiper core and required modules
 import { Navigation, Pagination, Scrollbar, A11y } from 'swiper/modules';
@@ -62,11 +63,18 @@ function ImgeSlide({ id }) {
             >
                 {(!Loding ? [...Array(6)] : dataShots ).map((self, index) => (
                     <SwiperSlide key={index}>
-                        {Loding ? (<img 
-                            src={self?.image} 
-                            className='w-full h-180 object-cover rounded-2xl' 
-                            alt={`Game ${index}`} 
-                        />) : (<div className="h-180 w-full rounded-2xl bg-white/5 animate-pulse" />)}
+                    <SwiperSlide key={index}>
+                        {Loding ? (
+                            <div className='w-full h-[720px] relative'>
+                                <Image 
+                                    src={self?.image} 
+                                    className='object-cover rounded-2xl' 
+                                    alt={`Game ${index}`} 
+                                    fill
+                                />
+                            </div>
+                        ) : (<div className="h-180 w-full rounded-2xl bg-white/5 animate-pulse" />)}
+                    </SwiperSlide>
                     </SwiperSlide>
                 ))}
             </Swiper>
@@ -83,12 +91,17 @@ function ImgeSlide({ id }) {
                             ${activeIndex === index ? 'ring-1 ring-[#ff3737] scale-101 -translate-y-5 shadow-3xl' : ''} // تمييز الصورة النشطة
                         `}
                     >
-                        <div className={`absolute inset-0 transition-opacity duration-500 ${activeIndex === index ? 'bg-transparent' : 'bg-black/30'} `} />
-                        {Loding ? (<img 
-                            src={self.image} 
-                            className='w-78 h-45 object-cover' 
-                            alt={`Game ${index}`} 
-                        />) : (<div className="w-78 h-45 rounded-2xl bg-white/5 animate-pulse" />)}
+                        <div className={`absolute inset-0 transition-opacity duration-500 z-10 ${activeIndex === index ? 'bg-transparent' : 'bg-black/30'} `} />
+                        {Loding ? (
+                            <div className='w-[312px] h-[180px] relative'>
+                                <Image 
+                                    src={self.image} 
+                                    className='object-cover' 
+                                    alt={`Game ${index}`} 
+                                    fill
+                                />
+                            </div>
+                        ) : (<div className="w-78 h-45 rounded-2xl bg-white/5 animate-pulse" />)}
                     </div>
                 ))}
             </div>

@@ -1,4 +1,5 @@
 "use client"
+import Image from 'next/image';
 import React, { useRef } from 'react'
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
@@ -29,7 +30,7 @@ function HeroCarouselSlides({ link, logo, Title, Text, isActive }) {
         <div ref={container} className='relative w-[94%] h-140 overflow-hidden ml-[3%]'>
             <div className='absolute bottom-20 left-20 z-10'>
                 {/* Initial state handled by Tailwind: invisible and translate-y-20 */}
-                <img src={logo} className='w-100 sna invisible translate-y-20' alt="logo" />
+                <Image src={logo} width={400} height={150} className='w-100 h-auto sna invisible translate-y-20' alt="logo" />
                 <p className='text-white text-[2rem] font-bold my-3 sna invisible translate-y-20'>{Title}</p>
                 <p className='text-white text-[1.2rem] my-3 whitespace-pre-line sna invisible translate-y-20'>{Text}</p>
                 <button 

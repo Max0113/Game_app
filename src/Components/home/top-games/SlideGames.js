@@ -1,5 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
+import Image from 'next/image';
 import { IoMdAddCircleOutline } from "react-icons/io";
 
 
@@ -15,11 +16,14 @@ function SlideGames({ game }) {
         <div className='absolute inset-0 w-0 group-hover:w-full transition-all duration-300 z-30 h-110 rounded-3xl bg-[#ff7878] opacity-50 pointer-events-none'></div>
         
         {/* IMAGE */}
-        <img 
-          className='w-full h-110 z-10 rounded-3xl object-cover' 
-          src={game.background_image} 
-          alt={game.name} 
-        />
+        <div className='w-full h-[440px] relative z-10 rounded-3xl overflow-hidden'>
+          <Image 
+            className='object-cover' 
+            src={game.background_image} 
+            alt={game.name} 
+            fill
+          />
+        </div>
         
 
         {/* Optional: Add a small '+' icon like your screenshot */}

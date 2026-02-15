@@ -2,6 +2,8 @@
 import React , { useEffect , useState } from 'react'
 
 
+import Image from 'next/image';
+
 // icon 
 import { FaSteam } from "react-icons/fa";
 import { FaPlaystation } from "react-icons/fa";
@@ -14,9 +16,14 @@ import { IoMdAddCircleOutline } from "react-icons/io";
 function SlideGames({ title , url , rating , platform}) {
   return (
     <div className=' group w-80 relative '>
-      <div className='w-80'>
-        <img src={url} className='w-full h-90 z-5 rounded-3xl object-cover'></img>
-        <div className='w-full h-90 z-6 bg-gradient-to-t from-black/90 via-black/30 to-transparent opacity-70  group-hover:bg-black/20 transition-opacity absolute bottom-0 rounded-3xl duration-300 '></div>
+      <div className='w-80 h-[360px] relative'>
+        <Image 
+          src={url} 
+          className='z-5 rounded-3xl object-cover'
+          fill
+          alt={title || 'Game Image'}
+        />
+        <div className='w-full h-full z-6 bg-gradient-to-t from-black/90 via-black/30 to-transparent opacity-70  group-hover:bg-black/20 transition-opacity absolute bottom-0 rounded-3xl duration-300 '></div>
       </div>
 
       <div className='absolute top-4 left-4 z-40 opacity-0 group-hover:opacity-100 transition-opacity duration-300'>

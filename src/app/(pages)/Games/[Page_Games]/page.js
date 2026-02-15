@@ -72,8 +72,8 @@ function Page() { // Capitalized component name (React convention)
             
             {/* Platforms Icons Skeleton */}
             <div className="flex gap-3">
-              {(dataGames.parent_platforms || [...Array(3)])?.map((i) => (
-                <div key={i} className="h-11 w-11 rounded-full bg-white/10 animate-pulse" />
+              {(dataGames.parent_platforms || [...Array(3)])?.map((i,index) => (
+                <div key={index} className="h-11 w-11 rounded-full bg-white/10 animate-pulse" />
               ))}
             </div>
           </div>

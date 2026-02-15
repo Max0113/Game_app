@@ -1,5 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
+import Image from 'next/image';
 import { IoMdAddCircleOutline } from "react-icons/io";
 
 
@@ -16,11 +17,14 @@ function Slide2({ game }) {
         
         {/* IMAGE */}
         {game.background_image ? (
-          <img 
-            className='w-full h-110 z-10 rounded-3xl object-cover' 
-            src={game.background_image} 
-            alt={game.name || "Game cover"} 
-          />
+          <div className='w-full h-[440px] relative z-10 rounded-3xl overflow-hidden'>
+            <Image 
+              className='object-cover' 
+              src={game.background_image} 
+              alt={game.name || "Game cover"} 
+              fill
+            />
+          </div>
         ) : (
           <div className='w-full h-110 z-10 rounded-3xl bg-neutral-800 flex items-center justify-center text-white/70 text-sm'>
             No image

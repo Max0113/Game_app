@@ -1,5 +1,6 @@
 "use client"
 import React , {useEffect , useState} from 'react'
+import Image from 'next/image';
 import {  GetGamesbyId  } from '../../../lib/api'
 
 function SlidePlaystationExclusives({ title , url , id }) {
@@ -25,8 +26,8 @@ function SlidePlaystationExclusives({ title , url , id }) {
                     : 'Loading description...'}
             </p>
         </div>
-        <div className='w-[150%] h-[100%]'>
-            <img src={url} className='object-cover h-full rounded-r-2xl'></img>
+        <div className='w-[150%] h-full relative'>
+            <Image src={url} fill className='object-cover rounded-r-2xl' alt={title || "Playstation Exclusive"} />
         </div>
     </div>
   )

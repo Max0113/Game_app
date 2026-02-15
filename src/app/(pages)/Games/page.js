@@ -39,31 +39,36 @@ function Page() {
   }, [selectedTags])
 
   useEffect(() => {
-    const fetching = async () => {
-      SetIsLoding(false)
-      try{
-        const { results, totalPages } = await PagesGames(IndexPage)
-        setTotalPages(totalPages)
+  const fetching = async () => {
+    SetIsLoding(false)
+    try{
+      const { results, totalPages } = await PagesGames(IndexPage)
+      setTotalPages(totalPages)
+      
+      // If tags are selected, filter the games, otherwise show all
+      if (selectedTags.length > 0) {
         const filtered = results.filter(game =>
-          game.tags.some(tag =>
-            selectedTags.includes(tag.name)
-          )
+          game.tags.some(tag => selectedTags.includes(tag.name))
         )
-        setGames(selectedTags.length > 0 ? filtered : results)
-      }catch{
-        setGames([])
-      } finally {
-        SetIsLoding(true)
+        setGames(filtered)  // ✅ Set filtered games
+      } else {
+        setGames(results)  // ✅ Set all games when no tags selected
       }
+      
+    }catch{
+      setGames([])
+    } finally {
+      SetIsLoding(true)
     }
-    fetching()
-  }, [selectedTags,IndexPage]); 
+  }
+  fetching()
+}, [selectedTags, IndexPage]);
 
   return (
     <div className="relative ml-10">
       <h1 className="text-white font-extrabold text-[2.3rem]">Games From Genres</h1>
       <div className="grid grid-cols-[220px_1fr] gap-2 mt-5">
-        <div className='flex flex-col gap-1.5  justify-center items-center bg-gray-700 rounded-2xl h-185'>
+        <div className='flex flex-col gap-1.5  justify-center items-center bg-black/30 rounded-2xl h-185'>
           {tags_Array.map((self, index) => (
             <button 
               key={index} 

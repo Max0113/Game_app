@@ -1,5 +1,6 @@
 "use client"
 import React , { useState , useEffect } from 'react'
+import Image from 'next/image';
 import HeroCarouselSlides from './HeroCarouselSlides'
 
 // import Swiper core and required modules
@@ -98,15 +99,18 @@ function HeroCarousel() {
                         onClick={() => swiperInstance?.slideTo(index)} // الانتقال للسلايد المطلوب
                         className={`
                             relative cursor-pointer overflow-hidden rounded-2xl transition-all duration-600 ease-in-out z-30
-                            hover:scale-102 hover:-translate-y-5 hover:z-30 hover:shadow-3xl  // تكبير عند الـ Hover
-                            ${activeIndex === index ? 'ring-1 ring-[#ff3737] scale-101 -translate-y-5 shadow-3xl' : ''} // تمييز الصورة النشطة
+                            hover:scale-102 hover:-translate-y-5 hover:z-30 hover:shadow-3xl
+                            ${activeIndex === index ? 'ring-1 ring-[#ff3737] scale-101 -translate-y-5 shadow-3xl' : ''}
+                            ${activeIndex === index ? 'ring-1 ring-[#ff3737] scale-101 -translate-y-5 shadow-3xl' : ''}
+                            w-[312px] h-[180px]
                         `}
                     >
-                        <div className={`absolute inset-0 transition-opacity duration-500 ${activeIndex === index ? 'bg-transparent' : 'bg-black/25'} `} />
-                        <img 
+                        <div className={`absolute inset-0 transition-opacity duration-500 z-10 ${activeIndex === index ? 'bg-transparent' : 'bg-black/25'} `} />
+                        <Image 
                             src={self.imge} 
-                            className='w-78 h-45 object-cover' 
+                            className='object-cover' 
                             alt={`Game ${index}`} 
+                            fill
                         />
                     </div>
                 ))}
