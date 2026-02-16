@@ -119,19 +119,21 @@ export const PlaystationExclusivesAPI = async () => {
 
 // Fetch 20 Games for Page 
 
-export const PagesGames = async (index) => {
+export const PagesGames = async (index, selectedTags) => {
+  const tagsName = selectedTags && selectedTags.length > 0 
+    ? `&genres=${selectedTags.map(tag => tag.toLowerCase().replaceAll(" ", "-")).join(",")}` 
+    : '';
+  
   try {
-    const URL = `https://api.rawg.io/api/games?key=${API_KEY}&page=${index}&page_size=12`
-    // https://api.rawg.io/api/games?key=d0ad34359202419fb94f193886b57e8c&page=1&tags=RPG&page_size=12
-    const response = await fetch(URL)
-    const data = await response.json()
-    const results = data?.results || []
-    const totalPages = Math.max(1, Math.ceil((data?.count || 0) / 12))
-    return { results, totalPages }
-  }catch (error) {
-    console.error(error)
-    return { results: [], totalPages: 1 }
+    const URL = `https://api.rawg.io/api/games?key=${API_KEY}&page=${index}${tagsName}&page_size=12`;
+    
+    const response = await fetch(URL);
+    const data = await response.json();
+    const results = data?.results || [];
+    const totalPages = Math.max(1, Math.ceil((data?.count || 0) / 12));
+    return { results, totalPages };
+  } catch (error) {
+    console.error(error);
+    return { results: [], totalPages: 1 };
   }
-}
-
-
+};

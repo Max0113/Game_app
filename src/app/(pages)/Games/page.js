@@ -15,7 +15,7 @@ function Page() {
   const [selectedTags, setSelectedTags] = useState([])
 
   const tags_Array = [
-    "Action", "Indie", "Adventure", "RPG", "Strategy",
+    "Action", "Indie", "Adventure", "Strategy",
     "Shooter", "Casual", "Simulation", "Puzzle", "Arcade",
     "Platformer", "Massively Multiplayer", "Racing", "Sports", "Fighting"
   ]
@@ -42,19 +42,10 @@ function Page() {
   const fetching = async () => {
     SetIsLoding(false)
     try{
-      const { results, totalPages } = await PagesGames(IndexPage)
+      const { results, totalPages } = await PagesGames(IndexPage , selectedTags)
       setTotalPages(totalPages)
-      
-      // If tags are selected, filter the games, otherwise show all
-      if (selectedTags.length > 0) {
-        const filtered = results.filter(game =>
-          game.tags.some(tag => selectedTags.includes(tag.name))
-        )
-        setGames(filtered)  // ✅ Set filtered games
-      } else {
-        setGames(results)  // ✅ Set all games when no tags selected
-      }
-      
+      setGames(results)
+      console.log(results)  // ✅ Set all games when no tags selected
     }catch{
       setGames([])
     } finally {
@@ -68,7 +59,7 @@ function Page() {
     <div className="relative ml-10">
       <h1 className="text-white font-extrabold text-[2.3rem]">Games From Genres</h1>
       <div className="grid grid-cols-[220px_1fr] gap-2 mt-5">
-        <div className='flex flex-col gap-1.5  justify-center items-center bg-black/30 rounded-2xl h-185'>
+        <div className='flex flex-col gap-1.5  justify-center items-center bg-black/30 rounded-2xl h-175'>
           {tags_Array.map((self, index) => (
             <button 
               key={index} 
@@ -89,7 +80,7 @@ function Page() {
         <div className=' rounded-2xl w-[95%] p-4 text-white py-0 mb-10'>
           <div className='flex flex-wrap justify-center gap-8'>
            {isLoding ? (games.map((game,index) => (
-              <SlideGames key={index}  url={game.background_image} title={game.name} platform={game.parent_platforms} rating={game.rating}></SlideGames>
+              <SlideGames key={index} id={game.id}  url={game.background_image} title={game.name} platform={game.parent_platforms} rating={game.rating}></SlideGames>
            )) ) : (games.map((game,index) => (
               <div key={index} className="h-80 w-80 rounded-2xl bg-white/5 animate-pulse" />
            )) )}

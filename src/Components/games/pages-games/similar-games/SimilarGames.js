@@ -80,11 +80,14 @@ function TopGames({ id }) {
               onSwiper={(swiper) => setSwiperInstance(swiper)}
               onSlideChange={(swiper) => setActiveIndex(swiper.activeIndex)}
           >
-            {SimilarGames.map((game , index) => ( 
+            {SimilarGames.length ? SimilarGames.map((game , index) => ( 
                 <SwiperSlide key={index}>
                     <Slide_Similar key={index} game={game}></Slide_Similar>
                 </SwiperSlide> 
-            ))}
+            )) : <div className='flex justify-center items-center gap-3 h-50'>
+                    <h1 className='text-white text-[1.3rem] font-bold'>Im sorry but i don't find antying</h1>
+                    <snap className='text-[1.4rem]'> 😀</snap>
+              </div>}
           </Swiper>
         )}
     </div>

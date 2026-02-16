@@ -33,60 +33,44 @@ game_app/
 │       ├── 📄 background-3.mp4
 │       └── 📄 background-4.mp4
 │
-└── 📁 src/
-    ├── 📁 app/
-    │   ├── 📄 layout.js
-    │   ├── 📄 loading.js
-    │   ├── 📄 globals.css
-    │   │
-    │   ├── 📁 (pages)/
-    │   │   ├── 📄 layout.js
-    │   │   ├── 📄 page.js
-    │   │   │
-    │   │   └── 📁 games/
-    │   │       ├── 📄 page.js
-    │   │       └── 📁 [pages-games]/
-    │   │           └── 📄 page.js
-    │   │
-    │   └── 📁 Login/
-    │       └── ...
-    │
-    ├── 📁 Components/
-    │   ├── 📁 navigation/
-    │   │   ├── 📁 sidebar/
-    │   │   │   └── 📄 Sidebar.js
-    │   │   │
-    │   │   └── 📁 top-bar/
-    │   │       ├── 📄 TopBar.js
-    │   │       ├── 📄 Search.js
-    │   │       └── 📄 ResultSearch.js
-    │   │
-    │   ├── 📁 home/
-    │   │   ├── 📁 hero/
-    │   │   │   ├── 📄 HeroCarousel.js
-    │   │   │   └── 📄 HeroCarouselSlides.js
-    │   │   │
-    │   │   ├── 📁 top-games/
-    │   │   │   ├── 📄 TopGames.js
-    │   │   │   └── 📄 SlideGames.js
-    │   │   │
-    │   │   └── 📁 playstation-exclusives/
-    │   │       ├── 📄 PlaystationExclusives.js
-    │   │       └── 📄 SlidePlaystationExclusives.js
-    │   │   
-    │   └── 📁 Games/
-    │       └── 📁 pages-games/
-    │           ├──📄 HeroCarousel.js
-    │           └──📁 similar-games/
-    │               ├── 📄 SimilarGames.js
-    │               └── 📄 SlideSimilar.js 
-    │
-    ├── 📁 features/
-    │   └── ...
-    │
-    └── 📁 lib/
-        ├── 📄 api.js
-        └── 📄 api-key.js
-
-
-
+└── src/
+    ├── 📁 Components
+    │   ├── 📁 games/
+    │   │   ├──📁 SlideGames.js
+    │   │   └──📁 pages-games/
+    │   │       ├── 📄 ImgeSlide.js
+    │   │       └── similar-games
+    │   │           ├── 📄 SimilarGames.js
+    │   │           └── 📄 Slide_Similar.js
+    │   ├──📁 home/
+    │   │   ├──📁 hero/
+    │   │   │   ├── 📄 HeroCarousel.js
+    │   │   │   └── 📄 HeroCarouselSlides.js
+    │   │   ├──📁 playstation-exclusives/
+    │   │   │   ├── 📄 PlaystationExclusives.js
+    │   │   │   └── 📄 SlidePlaystationExclusives.js
+    │   │   └──📁 top-games/
+    │   │       ├── 📄 SlideGames.js
+    │   │       └── 📄 TopGames.js
+    │   └──📁 navigation/
+    │       ├──📁 sidebar/
+    │       │   └── 📄 Sidebar.js
+    │       └──📁 top-bar/
+    │           ├── 📄 ResultSearch.js
+    │           ├── 📄 Search.js
+    │           └── 📄 TopBar.js
+    ├──📁 app/
+    │   ├──📁 (pages)/
+    │   │   ├──📁 games/
+    │   │   │   ├──📁 [Page_Games]/
+    │   │   │   │   └── 📄 page.js
+    │   │   │   └──📁 page.js
+    │   │   ├── 📄 layout.js
+    │   │   ├── 📄 page.js
+    │   │   └──📁 wlshlist/
+    │   │       └── 📄 page.js
+    │   ├── 📄 globals.css
+    │   ├── 📄 layout.js
+    │   └── 📄 loading.js
+    └──📁 lib/
+        └── api.js

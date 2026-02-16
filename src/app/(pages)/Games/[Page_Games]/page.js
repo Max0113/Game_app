@@ -43,7 +43,7 @@ function Page() { // Capitalized component name (React convention)
           <>
             <p className='text-white font-extrabold text-[2.3rem] ml-3 mb-1'>{dataGames.name}</p>
             
-            <p className='text-white font-bold text-[1.3rem] mb-5 ml-3'>{`Rating count : ${dataGames.ratings_count} ⭐`}</p>
+            <p className='text-white font-bold text-[1.3rem] mb-5 ml-3'>{`Rating count : ${dataGames.ratings_count || "N/A"} ⭐`}</p>
             
             {/* Fixed: Removed the extra closing div that was here */}
             <div className='flex gap-3 ml-3 mb-6'>

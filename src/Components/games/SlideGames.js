@@ -1,5 +1,6 @@
 "use client"
 import React , { useEffect , useState } from 'react'
+import Link from 'next/link'
 
 
 import Image from 'next/image';
@@ -13,7 +14,7 @@ import { IoLogoAppleAppstore } from "react-icons/io5";
 import { IoMdAddCircleOutline } from "react-icons/io";
 
 
-function SlideGames({ title , url , rating , platform}) {
+function SlideGames({id , title , url , rating , platform}) {
   return (
     <div className=' group w-80 relative '>
       <div className='w-80 h-[360px] relative'>
@@ -30,7 +31,9 @@ function SlideGames({ title , url , rating , platform}) {
           <div className='text-white text-4xl'><IoMdAddCircleOutline /></div> 
       </div>
 
+    
       <div className='absolute bottom-5 left-5 *:mb-2 z-7 group-hover:-translate-y-1 transition-all duration-300'>
+        <Link  href={`/games/${id}`}>
         <h1 className='text-[1.2rem] font-bold'>{title}</h1>
         <div className='flex flex-wrap gap-2 items-center'>
           {platform?.map((item, index) => (  
@@ -44,6 +47,7 @@ function SlideGames({ title , url , rating , platform}) {
           ))}
           <span className='font-bold'>{` . ⭐ ${rating}`}</span>
         </div>
+        </Link>
       </div>
     </div>
   )
