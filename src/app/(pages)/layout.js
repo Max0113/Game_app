@@ -1,5 +1,6 @@
 import Sidebar from "@/Components/navigation/sidebar/Sidebar";
 import TopBar from '@/Components/navigation/top-bar/TopBar'
+import { WishlistProvider } from "@/Components/wlshlist/wlshlist";
 
 
 export const metadata = {
@@ -15,7 +16,9 @@ export default function GridLayout({ children }) {
       </div>
       <div className="h-full overflow-y-auto">
         <TopBar></TopBar> 
-        {children}
+        <WishlistProvider>
+          {children}
+        </WishlistProvider>
       </div>
     </div>
   );

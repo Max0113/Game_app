@@ -1,10 +1,15 @@
+"use client"
 import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image';
 import { IoMdAddCircleOutline } from "react-icons/io";
+import { useWishlist } from '@/Components/wlshlist/wlshlist'
 
 
 function SlideGames({ game }) {
+  const { wishlist, toggleGame } = useWishlist()
+  const isActive = wishlist.includes(game.id)
+
   return (
     <div className='flex flex-col gap-2 my-3'>
       {/* WRAPPER: This is the magic part. 
@@ -28,7 +33,7 @@ function SlideGames({ game }) {
 
         {/* Optional: Add a small '+' icon like your screenshot */}
         <div className='absolute top-4 left-4 z-40 opacity-0 group-hover:opacity-100 transition-opacity'>
-           <div className='text-white text-4xl'><IoMdAddCircleOutline /></div> 
+           <div onClick={() => toggleGame(game.id)} className='text-white text-4xl'><IoMdAddCircleOutline className={isActive ? "rotate-z-45 transition-all duration-300" : "rotate-z-0 transition-all duration-300"} /></div> 
         </div>
 
         <div className="absolute inset-0 rounded-3xl bg-gradient-to-t from-black/90 via-black/30 to-transparent opacity-70 transition-opacity duration-500 group-hover:opacity-90"></div>

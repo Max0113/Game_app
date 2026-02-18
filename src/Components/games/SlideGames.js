@@ -1,6 +1,7 @@
 "use client"
-import React , { useEffect , useState } from 'react'
+import React from 'react'
 import Link from 'next/link'
+import { useWishlist } from '@/Components/wlshlist/wlshlist'
 
 
 import Image from 'next/image';
@@ -15,8 +16,12 @@ import { IoMdAddCircleOutline } from "react-icons/io";
 
 
 function SlideGames({id , title , url , rating , platform}) {
+    const { wishlist, toggleGame } = useWishlist();
+    const isActive = wishlist.includes(id);
+  
+  
   return (
-    <div className=' group w-80 relative '>
+    <div className=' group w-80 relative cursor-pointer'>
       <div className='w-80 h-[360px] relative'>
         <Image 
           src={url} 
@@ -28,7 +33,9 @@ function SlideGames({id , title , url , rating , platform}) {
       </div>
 
       <div className='absolute top-4 left-4 z-40 opacity-0 group-hover:opacity-100 transition-opacity duration-300'>
-          <div className='text-white text-4xl'><IoMdAddCircleOutline /></div> 
+          <div onClick={() => {
+            toggleGame(id)
+          } } className='text-white text-4xl'><IoMdAddCircleOutline className={isActive ? "rotate-z-45 transition-all duration-300" : "rotate-z-0 transition-all duration-300"} /></div> 
       </div>
 
     

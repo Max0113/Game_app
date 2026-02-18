@@ -1,90 +1,154 @@
 "use client"
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { usePathname } from "next/navigation";
-import Link from 'next/link'; // Import Link for navigation
+import Link from 'next/link';
 import { GetGamesbyId } from "@/lib/api"
 import ImgeSlide from "@/Components/games/pages-games/ImgeSlide"
 import SimilarGames from '@/Components/games/pages-games/similar-games/SimilarGames'
 
+import gsap from 'gsap'
+import { useGSAP } from '@gsap/react'
+import { SplitText } from "gsap/SplitText";
 
-// icons
+gsap.registerPlugin(SplitText);
+
 import { FaSteam, FaPlaystation, FaLinux } from "react-icons/fa";
 import { IoLogoXbox } from "react-icons/io";
 import { IoLogoGooglePlaystore, IoLogoAppleAppstore } from "react-icons/io5";
 import { BsNintendoSwitch } from "react-icons/bs";
+// ✅ Removed wrong import: Container is from postcss, not needed here
 
-function Page() { // Capitalized component name (React convention)
+function Page() {
 
-  const [dataGames, setdataGames] = useState({})
-  const [Loding, setLoading] = useState(false)
+  const [dataGames, setDataGames] = useState(null)  // ✅ null is better default than {}
+  const [loading, setLoading] = useState(false)      // ✅ Fixed capitalization convention
 
-  const pathname = usePathname(); 
+  const pathname = usePathname();
   const page = pathname.split("/")[2] || "/";
 
+  const container = useRef()
+
   useEffect(() => {
+    setLoading(false)  // ✅ Reset loading on page change
+    setDataGames(null) // ✅ Clear stale data when navigating to new game
+
     const fetchdata = async () => {
       try {
-        const Games = await GetGamesbyId(page)
-        setdataGames(Games || [])
-      }catch(error) {
+        const games = await GetGamesbyId(page)
+        setDataGames(games || null)
+      } catch (error) {
         console.error(error)
-        setdataGames([])
-      }finally {
+        setDataGames(null)
+      } finally {
         setLoading(true)
       }
-
     }
     fetchdata()
-  }, [page]) // Added slug as dependency so it refreshes when you click a similar game
+  }, [page])
+
+  useGSAP(() => {
+    // ✅ Guard: wait for real data with a name property
+    if (!dataGames?.name) return
+
+    const splitTitle = SplitText.create(".title", { type: "words" })
+    const splitrating = SplitText.create(".rating", { type: "words" })
+
+    gsap.set(splitTitle.words, { autoAlpha: 0, y: 20 })
+    gsap.set(splitrating.words, { autoAlpha: 0, y: 20 })
+    gsap.set(".icon", { autoAlpha: 0, y: 20 })
+    gsap.set(".slides", { autoAlpha: 0, y: 20 })
+
+    gsap.timeline()
+      .to(splitTitle.words, {
+        autoAlpha: 1,
+        y: 0,
+        stagger: 0.2,
+        duration: 0.6,
+        ease: "power2.out"
+      })
+      .to(splitrating.words, {
+        autoAlpha: 1,
+        y: 0,
+        stagger: 0.2,
+        duration: 0.5,
+        ease: "power2.out"
+      },"-=20%")
+      .to(".icon", {
+        autoAlpha: 1,
+        y: 0,
+        stagger: 0.2,
+        duration: 0.5,
+        ease: "power2.out"
+      },"-=30%")
+      .to(".slides", {
+        autoAlpha: 1,
+        y: 0,
+        stagger: 0.2,
+        duration: 0.6,
+        ease: "power2.out"
+      })
+
+    return () => {
+      splitTitle.revert()
+      splitrating.revert()
+    } // ✅ Cleanup to prevent span duplication
+  }, { scope: container, dependencies: [dataGames] })
 
   return (
-    <div className='m-10'>
-        {Loding ? (
-          <>
-            <p className='text-white font-extrabold text-[2.3rem] ml-3 mb-1'>{dataGames.name}</p>
-            
-            <p className='text-white font-bold text-[1.3rem] mb-5 ml-3'>{`Rating count : ${dataGames.ratings_count || "N/A"} ⭐`}</p>
-            
-            {/* Fixed: Removed the extra closing div that was here */}
-            <div className='flex gap-3 ml-3 mb-6'>
-              {(dataGames.parent_platforms)?.map((item, index) => (
-                <span key={index} className="text-[1.7rem]">
-                    {item.platform.name === "PC" && <FaSteam className='text-white' />}
-                    {item.platform.name === "PlayStation" && <FaPlaystation className='text-white' />}
-                    {item.platform.name === "Xbox" && <IoLogoXbox className='text-white' />}
-                    {item.platform.name === "Android" && <IoLogoGooglePlaystore className='text-white' />}
-                    {item.platform.name === "Apple Macintosh" && <IoLogoAppleAppstore className='text-white' />}
-                    {item.platform.name === "Linux" && <FaLinux className='text-white' />}
-                    {item.platform.name === "Nintendo" && <BsNintendoSwitch className='text-white' />}
-                </span>
-              ))}
-          </div>
-          </>
-          ) : 
-        
-          (
-          <div className="space-y-4 ml-3 mb-10">
-            {/* Title Skeleton */}
-            <div className="h-12 w-1/2 rounded-lg bg-white/10 animate-pulse" />
-            
-            {/* Subtitle/Rating Skeleton */}
-            <div className="h-9 w-1/4 rounded-lg bg-white/5 animate-pulse" />
-            
-            {/* Platforms Icons Skeleton */}
-            <div className="flex gap-3">
-              {(dataGames.parent_platforms || [...Array(3)])?.map((i,index) => (
-                <div key={index} className="h-11 w-11 rounded-full bg-white/10 animate-pulse" />
-              ))}
-            </div>
-          </div>
-          )
-        }
+    <div ref={container} className='m-10'>
 
+      {/* ✅ Fixed: was `{true ? ...}` — now actually checks loading state */}
+      {loading && dataGames ? (
+        <>
+          <p className='text-white font-extrabold text-[2.3rem] ml-3 mb-1 title'>
+            {dataGames.name}
+          </p>
+
+          <p className='text-white font-bold text-[1.3rem] mb-5 ml-3 rating'>
+            {`Rating count : ${dataGames.ratings_count || "N/A"} ⭐`}
+          </p>
+
+          <div className='flex gap-3 ml-3 mb-6 '>
+            {dataGames.parent_platforms?.map((item, index) => (
+              <span key={index} className="text-[1.7rem] icon">
+                {item.platform.name === "PC" && <FaSteam className='text-white' />}
+                {item.platform.name === "PlayStation" && <FaPlaystation className='text-white' />}
+                {item.platform.name === "Xbox" && <IoLogoXbox className='text-white' />}
+                {item.platform.name === "Android" && <IoLogoGooglePlaystore className='text-white' />}
+                {item.platform.name === "Apple Macintosh" && <IoLogoAppleAppstore className='text-white' />}
+                {item.platform.name === "Linux" && <FaLinux className='text-white' />}
+                {item.platform.name === "Nintendo" && <BsNintendoSwitch className='text-white' />}
+              </span>
+            ))}
+          </div>
+        </>
+      ) : (
+        // ✅ Skeleton shows correctly while loading
+        <div className="space-y-4 ml-3 mb-10">
+          <div className="h-12 w-1/2 rounded-lg bg-white/10 animate-pulse" />
+          <div className="h-9 w-1/4 rounded-lg bg-white/5 animate-pulse" />
+          <div className="flex gap-3">
+            {[...Array(3)].map((_, index) => (  // ✅ Fixed: was using dataGames.parent_platforms which is undefined during loading
+              <div key={index} className="h-11 w-11 rounded-full bg-white/10 animate-pulse" />
+            ))}
+          </div>
+        </div>
+      )}
+
+      <div className='slides'>
         <ImgeSlide id={page} />
+      </div>
 
-        {Loding ? (<div className='text-white py-8' dangerouslySetInnerHTML={{ __html: dataGames.description }} />) : (<div className="h-50 w-full rounded-lg bg-white/5 animate-pulse" />)}
+      <div className='slides'>
+        {loading
+          ? <div className='text-white py-8' dangerouslySetInnerHTML={{ __html: dataGames?.description }} />
+          : <div className="h-50 w-full rounded-lg bg-white/5 animate-pulse" />
+        }
+      </div>
 
-        <SimilarGames id={page}></SimilarGames>
+      <div className='slides'>
+        <SimilarGames id={page} />
+      </div>
 
     </div>
   )
