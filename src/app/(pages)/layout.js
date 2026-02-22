@@ -10,7 +10,7 @@ export const metadata = {
 
 export default function GridLayout({ children }) {
   return (
-    <div className="grid grid-cols-[270px_1fr] h-screen w-full max-lg:grid-cols-[90px_1fr] transition-all duration-200">
+    <div className="bg-[#9E3B3B] grid grid-cols-[270px_1fr] h-screen w-full max-lg:grid-cols-[90px_1fr] transition-all duration-200">
       <div className="shadow-lg">
         <Sidebar />
       </div>
