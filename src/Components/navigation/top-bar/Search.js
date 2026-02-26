@@ -3,7 +3,9 @@ import React, { useEffect, useState, useRef } from 'react';
 import { FaSearch, FaTimes } from "react-icons/fa";
 import { SearchGames } from '../../../lib/api';
 import ResultSearch from './ResultSearch';
-import Link from 'next/link'
+import Link from 'next/link';
+import gsap from 'gsap'
+import { useGSAP } from '@gsap/react'
 
 function Search() {
 
@@ -14,7 +16,20 @@ function Search() {
   const [loading, setLoading] = useState(false);
 
   
-  const containerRef = useRef(null);  
+  const containerRef = useRef(null);
+  
+  useGSAP(() => {
+    if (!games.length || loading) return  // ✅ Wait for data + not loading
+    
+    gsap.set(".slides", { autoAlpha: 0, y: 8 })
+    gsap.to(".slides", {
+      autoAlpha: 1,
+      y: 0,
+      stagger: 0.15,
+      duration: 1,
+      ease: "power2.out"
+    })
+}, { scope: containerRef, dependencies: [games, loading] })
 
 
   useEffect(() => {
@@ -94,7 +109,7 @@ function Search() {
 
       <div className={`my-3 
         overflow-y-auto 
-        ${isActive && games.length > 0 ? 'block' : 'hidden'}  // ✅ Check games exist
+        ${isActive && games.length > 0 ? 'block' : 'hidden'}  
         [&::-webkit-scrollbar]:w-3 
         [&::-webkit-scrollbar-track]:bg-gray-900 
         [&::-webkit-scrollbar-track]:hidden
@@ -106,19 +121,22 @@ function Search() {
         {
         
         !loading ? (games.map((element, index) => (
+          <div key={index} className='slides'>
             <Link 
               href={`/games/${element.id}`} // add Link
               key={element.id || index}
             > 
-              <ResultSearch 
-                key={element.id || index}  
-                title={element.name}
-                img={element.background_image}
-                rating={element.rating}
-                released={element.released}
-                platforms={element.parent_platforms || []}  
-              />
+                <ResultSearch 
+                  key={element.id || index}  
+                  title={element.name}
+                  img={element.background_image}
+                  rating={element.rating}
+                  released={element.released}
+                  platforms={element.parent_platforms || []}  
+                />
             </Link> 
+          </div>
+            
         )) )
         : (<div className="flex items-center justify-center py-6 text-white">
             <span className="animate-spin h-6 w-6 border-2 border-white/30 border-t-white rounded-full"></span>

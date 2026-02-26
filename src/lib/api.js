@@ -1,6 +1,6 @@
 import React from 'react'
 
-const API_KEY = 'd0ad34359202419fb94f193886b57e8c';
+const API_KEY = '9365d16ae6b549daac11aa18b1880b2d';
 
 
 // https://api.rawg.io/api/games?key=d0ad34359202419fb94f193886b57e8c&page=1&page_size=12

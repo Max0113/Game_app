@@ -45,7 +45,7 @@ function Sidebar() {
   
 
   return (
-    <main className='text-white bg-[#000000a1] backdrop-blur-2xl  rounded-2xl shadow-2xl h-[97.5%] py-7 px-9 m-2 max-lg:px-0'>
+    <main className='text-white bg-[#00000084] backdrop-blur-2xl  rounded-2xl shadow-2xl h-[97.5%] py-7 px-9 m-2 max-lg:px-0'>
         <h1 className='font-extrabold text-[1.8rem] max-lg:hidden '><span className='text-[#ff7878]'>Gaming</span>Boi</h1>
         <h1 className='font-bold text-[1.6rem] hidden max-lg:block text-center'><span className='text-[#ff7878]'>G</span>B</h1>
         <ul className='flex flex-col max-lg:items-center p-3 *:px-3 *:py-3 max-lg:*:px-0'>

@@ -1,7 +1,9 @@
 "use client"
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState , useRef } from 'react'
 import { PagesGames } from '@/lib/api'
 import SlideGames from '@/Components/games/SlideGames'
+import gsap from 'gsap'
+import { useGSAP } from '@gsap/react'
 
 function Page() {
 
@@ -19,6 +21,33 @@ function Page() {
     "Shooter", "Casual", "Simulation", "Puzzle", "Arcade",
     "Platformer", "Massively Multiplayer", "Racing", "Sports", "Fighting"
   ]
+
+  const container = useRef()
+
+  // animation 
+
+  useGSAP(() => {
+    gsap.to(".select" , {
+      autoAlpha: 1,
+      y : 0
+    })
+  },{ scope: container})
+
+  useGSAP(() => {
+    gsap.set(".slides", { autoAlpha: 0, y: 20 });
+    const timiline = gsap.timeline()
+     timiline.to(".slides",{
+        autoAlpha : 1 ,
+        y : 0 ,
+        stagger : 0.2 
+     })
+     timiline.to(".buttons",{
+        autoAlpha : 1 ,
+        y : 0 , 
+        delay : 2,
+     })
+
+  },{ scope: container , dependencies: [games]});
 
   // methode 
 
@@ -56,10 +85,10 @@ function Page() {
 }, [selectedTags, IndexPage]);
 
   return (
-    <div className="relative ml-10">
+    <div ref={container} className="relative ml-10">
       <h1 className="text-white font-extrabold text-[2.3rem]">Games From Genres</h1>
       <div className="grid grid-cols-[220px_1fr] gap-2 mt-5">
-        <div className='flex flex-col gap-1.5  justify-center items-center bg-black/30 rounded-2xl h-175'>
+        <div className='flex flex-col gap-1.5  justify-center items-center bg-black/30 rounded-2xl h-175 select invisible translate-y-4'>
           {tags_Array.map((self, index) => (
             <button 
               key={index} 
@@ -80,12 +109,13 @@ function Page() {
         <div className=' rounded-2xl w-[95%] p-4 text-white py-0 mb-10'>
           <div className='flex flex-wrap justify-center gap-8'>
            {isLoding ? (games.map((game,index) => (
-              <SlideGames key={index} id={game.id}  url={game.background_image} title={game.name} platform={game.parent_platforms} rating={game.rating}></SlideGames>
+              <div key={index} className='slides invisible translate-y-5'><SlideGames key={index} id={game.id}  url={game.background_image} title={game.name} platform={game.parent_platforms} rating={game.rating}></SlideGames></div>
            )) ) : (games.map((game,index) => (
-              <div key={index} className="h-80 w-80 rounded-2xl bg-white/5 animate-pulse" />
+              <div key={index} className='slides invisible translate-y-5'><div key={index} className="h-80 w-80 rounded-2xl bg-white/5 animate-pulse" /></div>
            )) )}
           </div>
-          <div className="flex gap-2 justify-center mt-6">
+
+          <div className="flex gap-2 justify-center mt-6 buttons invisible translate-y-5">
 
               {/* First page */}
               <button
