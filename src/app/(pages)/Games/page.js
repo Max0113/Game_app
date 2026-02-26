@@ -27,6 +27,13 @@ function Page() {
   // animation 
 
   useGSAP(() => {
+    gsap.to(".select" , {
+      autoAlpha: 1,
+      y : 0
+    })
+  },{ scope: container})
+
+  useGSAP(() => {
     gsap.set(".slides", { autoAlpha: 0, y: 20 });
     const timiline = gsap.timeline()
      timiline.to(".slides",{
@@ -81,7 +88,7 @@ function Page() {
     <div ref={container} className="relative ml-10">
       <h1 className="text-white font-extrabold text-[2.3rem]">Games From Genres</h1>
       <div className="grid grid-cols-[220px_1fr] gap-2 mt-5">
-        <div className='flex flex-col gap-1.5  justify-center items-center bg-black/30 rounded-2xl h-175'>
+        <div className='flex flex-col gap-1.5  justify-center items-center bg-black/30 rounded-2xl h-175 select invisible translate-y-4'>
           {tags_Array.map((self, index) => (
             <button 
               key={index} 

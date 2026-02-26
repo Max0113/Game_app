@@ -60,9 +60,14 @@ function PlaystationExclusives() {
                         <SwiperSlide key={index}>
                             <SlidePlaystationExclusives key={index} title={self.name} id={self.id} url={self.background_image}></SlidePlaystationExclusives>
                         </SwiperSlide>)
-                )) : (<div className="flex items-center justify-center py-6 text-white h-60">
-                <span className="animate-spin h-10 w-10 border-2 border-white/30 border-t-white rounded-full"></span>
-              </div>)}
+                )) : (
+
+            [...Array(9)].map((index) => ( 
+              <SwiperSlide key={index}>
+                <div key={index} className="h-75 rounded-2xl bg-white/5 animate-pulse" />
+              </SwiperSlide> 
+            ))                   
+                )}
             </Swiper>
         </div>
     )

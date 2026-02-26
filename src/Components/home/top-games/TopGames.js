@@ -76,9 +76,11 @@ function TopGames({ Title , index , time }) {
                   <SlideGames key={index} game={game}></SlideGames>
               </SwiperSlide> 
             ))  ) : (
-              <div className="flex items-center justify-center py-6 text-white h-100">
-                <span className="animate-spin h-10 w-10 border-2 border-white/30 border-t-white rounded-full"></span>
-              </div>
+            [...Array(9)].map((index) => ( 
+              <SwiperSlide key={index}>
+                <div key={index} className="h-110 rounded-2xl bg-white/5 animate-pulse" />
+              </SwiperSlide> 
+            ))
             )
           }
         </Swiper>

@@ -1,12 +1,12 @@
 "use client"
 import React , { useState } from 'react'
 import LiquidEther from '@/Components/UI/LiquidEther';
-import { MdOutlineVisibility } from "react-icons/md";
-import { MdOutlineVisibilityOff } from "react-icons/md";
+import { MdOutlineVisibility , MdOutlineVisibilityOff } from "react-icons/md";
 import { FcGoogle } from 'react-icons/fc'
 import { FaApple } from 'react-icons/fa'
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
+
 
 
 function page() {
@@ -16,8 +16,7 @@ function page() {
     useGSAP(() => {
         gsap.to(".form",{
             autoAlpha : 1 ,
-            y : 0 ,
-            duration : 1.2
+            y : 0
         })
     })
 
@@ -47,11 +46,15 @@ function page() {
             />
         </div>
 
-        <div className='w-screen h-screen flex justify-center items-center form invisible translate-y-3 overflow-hidden'>
-            <form className='p-10 w-125 bg-[#5a5a5a32] backdrop-blur-2xl rounded-2xl '>
+        <div className='w-screen h-screen flex justify-center items-center'>
+            <form className='p-10 w-125 bg-[#5a5a5a32] backdrop-blur-2xl rounded-2xl form invisible translate-y-4'>
                 <div className='text-center my-3'>
-                    <h1 className='text-white font-bold text-[1.4rem]'>Login</h1>
-                    <p className='text-[#9d9d9d] text-[0.9rem] font-medium'> Welcome back! Please entre your details</p>
+                    <h1 className='text-white font-bold text-[1.4rem]'>Sign in</h1>
+                    <p className='text-[#9d9d9d] text-[0.9rem] font-medium'> Welcome! Please entre your details</p>
+                </div>
+                <div className='*:m-1 my-3'>
+                    <lable className='text-[0.8rem] text-white font-medium'>Name *</lable>
+                    <input type='text' className='text-white text-[0.8rem] w-full outline-none px-5 py-3 border-1 border-[#9d9d9d] rounded-sm appearance-none' placeholder='Email'  required/>
                 </div>
                 <div className='*:m-1 my-3'>
                     <lable className='text-[0.8rem] text-white font-medium'>Email *</lable>
@@ -101,20 +104,47 @@ function page() {
                             type='checkbox'
                             value=""
                             id="checkboxDefault"
-                            className='glass-checkbox' required
+                            className='glass-checkbox'
                         />
                         <label htmlFor="checkboxDefault" className='text-white text-[0.8rem] font-medium cursor-pointer'>
-                            Remember for 30 Days
+                            You are agreed to laws
                         </label>
                     </div>
                     <div className='flex cursor-pointer'>
-                        <a className='text-[0.8rem] text-[#ff3737] font-medium hover:underline'>Forgot Password</a>
+                        <a className='text-[0.8rem] text-[#ff3737] font-medium hover:underline cursor-pointer'>Show laws</a>
                     </div>
                 </div>
                 <input type='submit' value='Sign in' className='bg-[#ff3737] w-full py-3 text-white rounded-3xl my-3 font-bold shadow-[#ff373777] hover:bg-[#ff2121] hover:scale-101 hover:shadow-lg transition-all duration-300' />
-                <p className='text-gray-500 text-[0.85rem] text-center mt-3'>
-                    Don't have an account? <a href='/signup' className='font-bold text-[#ff3737] hover:underline'>Sign up</a>
-                </p>
+                <div className='flex items-center gap-3 w-full my-3'>
+                    <hr className='flex-1 border-t border-gray-500'/>
+                    <span className='text-gray-400 text-[0.8rem] font-medium'>or</span>
+                    <hr className='flex-1 border-t border-gray-500'/>
+                </div>
+                <div className='flex flex-col items-center justify-center gap-4 w-full my-3'>
+
+      
+                    <div className='flex items-center gap-3 w-full'>
+
+
+                        <button className='flex items-center justify-center gap-2 w-full border border-gray-300 rounded-lg py-2 px-4 text-[0.85rem] text-gray-700 bg-white hover:bg-gray-50 cursor-pointer'>
+                        <FcGoogle className='w-5 h-5 text-xl'/>
+                        Sign in with Google
+                        </button>
+
+    
+                        <button className='flex items-center justify-center gap-2 w-full border border-gray-300 rounded-lg py-2 px-4 text-[0.85rem] text-gray-700 bg-white hover:bg-gray-50 cursor-pointer'>
+                        <FaApple className='w-5 h-5 text-xl'/>
+                        Sign in with Apple
+                        </button>
+
+                    </div>
+
+
+                    <p className='text-gray-500 text-[0.85rem] text-center'>
+                        if you have any problem <a href='/signup' className='font-bold text-[#ff3737] hover:underline'>Contact me</a>
+                    </p>
+
+                </div>
             </form>
         </div>
     </div>

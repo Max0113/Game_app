@@ -53,10 +53,10 @@ function Page() {
     const splitTitle = SplitText.create(".title", { type: "words" })
     const splitrating = SplitText.create(".rating", { type: "words" })
 
-    gsap.set(splitTitle.words, { autoAlpha: 0, y: 20 })
-    gsap.set(splitrating.words, { autoAlpha: 0, y: 20 })
-    gsap.set(".icon", { autoAlpha: 0, y: 20 })
-    gsap.set(".slides", { autoAlpha: 0, y: 20 })
+    gsap.set(splitTitle.words, { autoAlpha: 0, y: 10 })
+    gsap.set(splitrating.words, { autoAlpha: 0, y: 10 })
+    gsap.set(".icon", { autoAlpha: 0, y: 8 })
+    gsap.set(".slides", { autoAlpha: 0, y: 8 })
 
     gsap.timeline()
       .to(splitTitle.words, {
@@ -72,7 +72,7 @@ function Page() {
         stagger: 0.2,
         duration: 0.5,
         ease: "power2.out"
-      },"-=20%")
+      },"-=50%")
       .to(".icon", {
         autoAlpha: 1,
         y: 0,
@@ -110,7 +110,7 @@ function Page() {
 
           <div className='flex gap-3 ml-3 mb-6 '>
             {dataGames.parent_platforms?.map((item, index) => (
-              <span key={index} className="text-[1.7rem] icon">
+              <span key={index} className="text-[1.7rem] icon invisible">
                 {item.platform.name === "PC" && <FaSteam className='text-white' />}
                 {item.platform.name === "PlayStation" && <FaPlaystation className='text-white' />}
                 {item.platform.name === "Xbox" && <IoLogoXbox className='text-white' />}
@@ -135,18 +135,15 @@ function Page() {
         </div>
       )}
 
-      <div className='slides'>
+      {loading ? <div className='slides invisible translate-y-4'>
         <ImgeSlide id={page} />
+      </div> : <div className="h-150 w-full rounded-lg bg-white/5 animate-pulse" />}
+
+      <div className='slides invisible translate-y-4'>
+          <div className='text-white py-8' dangerouslySetInnerHTML={{ __html: dataGames?.description }} />
       </div>
 
-      <div className='slides'>
-        {loading
-          ? <div className='text-white py-8' dangerouslySetInnerHTML={{ __html: dataGames?.description }} />
-          : <div className="h-50 w-full rounded-lg bg-white/5 animate-pulse" />
-        }
-      </div>
-
-      <div className='slides'>
+      <div className='slides invisible translate-y-4'>
         <SimilarGames id={page} />
       </div>
 

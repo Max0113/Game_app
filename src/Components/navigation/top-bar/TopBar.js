@@ -10,12 +10,12 @@ function TopBar() {
       <div className='mx-3 grid grid-cols-[120px_120px] gap-6'>
 
         <Link href='/login'
-          className='bg-[#542323a1] text-white px-7 py-2.5 rounded-md hover:bg-[#ff5b5b] hover:shadow-lg hover:shadow-[#fd5454] duration-300 text-center'>
+          className='bg-[#542323a1] text-white px-7 py-2.5 rounded-md hover:bg-[#ff5b5b] hover:shadow-lg hover:shadow-[#fd54547d] duration-300 text-center'>
           Login
         </Link>
 
-        <Link href='/signup'
-          className='bg-[#542323a1] text-white px-7 py-2.5 rounded-md hover:bg-[#ff5b5b] hover:shadow-lg hover:shadow-[#fd5454] duration-300 text-center'>
+        <Link href='/signin'
+          className='bg-[#542323a1] text-white px-7 py-2.5 rounded-md hover:bg-[#ff5b5b] hover:shadow-lg hover:shadow-[#fd54547d] duration-300 text-center'>
           Sign In
         </Link>
 

@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState , useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import Link from "next/link";
@@ -12,13 +12,15 @@ function Page() {
   const [games, setGames] = useState([]);
   const [loading, setLoading] = useState(false);
 
+  const container = useRef()
+
   useGSAP(() => {
     gsap.to(".slides" , {
       autoAlpha : 1 ,
       y : 0 ,
       stagger : 0.2  // ✅ كل card تظهر بعد الثانية بـ 0.2s
     })
-},[games])
+},{ scope : container , dependencies : [games]})
 
 
   useEffect(() => {
@@ -55,7 +57,7 @@ function Page() {
   }, [wishlist]);
 
   return (
-    <div className="m-10">
+    <div className="m-10" ref={container}>
       <h1 className="text-[2.5rem] font-bold text-white">My WishList 💖</h1>
 
       {!loading && games.length === 0 && (
