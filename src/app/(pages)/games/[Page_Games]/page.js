@@ -1,93 +1,161 @@
 "use client"
-import React, { useEffect, useState } from 'react'
-import { usePathname } from "next/navigation";
-import Link from 'next/link'; // Import Link for navigation
+import React, { useEffect, useRef, useState } from 'react'
+import { usePathname } from "next/navigation"
 import { GetGamesbyId } from "@/lib/api"
 import ImgeSlide from "@/Components/games/pages-games/ImgeSlide"
 import SimilarGames from '@/Components/games/pages-games/similar-games/SimilarGames'
 
+import gsap from 'gsap'
+import { useGSAP } from '@gsap/react'
+import { SplitText } from "gsap/SplitText"
 
-// icons
-import { FaSteam, FaPlaystation, FaLinux } from "react-icons/fa";
-import { IoLogoXbox } from "react-icons/io";
-import { IoLogoGooglePlaystore, IoLogoAppleAppstore } from "react-icons/io5";
-import { BsNintendoSwitch } from "react-icons/bs";
+import { FaSteam, FaPlaystation, FaLinux } from "react-icons/fa"
+import { IoLogoXbox } from "react-icons/io"
+import { IoLogoGooglePlaystore, IoLogoAppleAppstore } from "react-icons/io5"
+import { BsNintendoSwitch } from "react-icons/bs"
 
-function Page() { // Capitalized component name (React convention)
+gsap.registerPlugin(SplitText)
 
-  const [dataGames, setdataGames] = useState({})
-  const [Loding, setLoading] = useState(false)
+function Page() {
+  const [dataGames, setDataGames] = useState(null)
+  const [loading, setLoading] = useState(false)
 
-  const pathname = usePathname(); 
-  const page = pathname.split("/")[2] || "/";
+  const pathname = usePathname()
+  const page = pathname.split("/")[2] || "/"
+
+  const container = useRef()
 
   useEffect(() => {
+    setLoading(false)
+    setDataGames(null)
+
     const fetchdata = async () => {
       try {
-        const Games = await GetGamesbyId(page)
-        setdataGames(Games || [])
-      }catch(error) {
+        const games = await GetGamesbyId(page)
+        setDataGames(games || null)
+      } catch (error) {
         console.error(error)
-        setdataGames([])
-      }finally {
+        setDataGames(null)
+      } finally {
         setLoading(true)
       }
-
     }
+
     fetchdata()
-  }, [page]) // Added slug as dependency so it refreshes when you click a similar game
+  }, [page])
+
+  useGSAP(() => {
+    if (!dataGames?.name) return
+
+    const splitTitle = SplitText.create(".title", { type: "words" })
+    const splitRating = SplitText.create(".rating", { type: "words" })
+
+    gsap.set(splitTitle.words, { autoAlpha: 0, y: 10 })
+    gsap.set(splitRating.words, { autoAlpha: 0, y: 10 })
+    gsap.set(".icon", { autoAlpha: 0, y: 8 })
+    gsap.set(".slides", { autoAlpha: 0, y: 8 })
+
+    gsap
+      .timeline()
+      .to(splitTitle.words, {
+        autoAlpha: 1,
+        y: 0,
+        stagger: 0.2,
+        duration: 0.6,
+        ease: "power2.out"
+      })
+      .to(
+        splitRating.words,
+        {
+          autoAlpha: 1,
+          y: 0,
+          stagger: 0.2,
+          duration: 0.5,
+          ease: "power2.out"
+        },
+        "-=50%"
+      )
+      .to(
+        ".icon",
+        {
+          autoAlpha: 1,
+          y: 0,
+          stagger: 0.2,
+          duration: 0.5,
+          ease: "power2.out"
+        },
+        "-=30%"
+      )
+      .to(".slides", {
+        autoAlpha: 1,
+        y: 0,
+        stagger: 0.2,
+        duration: 0.6,
+        ease: "power2.out"
+      })
+
+    return () => {
+      splitTitle.revert()
+      splitRating.revert()
+    }
+  }, { scope: container, dependencies: [dataGames] })
 
   return (
-    <div className='m-10'>
-        {Loding ? (
-          <>
-            <p className='text-white font-extrabold text-[2.3rem] ml-3 mb-1'>{dataGames.name}</p>
-            
-            <p className='text-white font-bold text-[1.3rem] mb-5 ml-3'>{`Rating count : ${dataGames.ratings_count || "N/A"} ⭐`}</p>
-            
-            {/* Fixed: Removed the extra closing div that was here */}
-            <div className='flex gap-3 ml-3 mb-6'>
-              {(dataGames.parent_platforms)?.map((item, index) => (
-                <span key={index} className="text-[1.7rem]">
-                    {item.platform.name === "PC" && <FaSteam className='text-white' />}
-                    {item.platform.name === "PlayStation" && <FaPlaystation className='text-white' />}
-                    {item.platform.name === "Xbox" && <IoLogoXbox className='text-white' />}
-                    {item.platform.name === "Android" && <IoLogoGooglePlaystore className='text-white' />}
-                    {item.platform.name === "Apple Macintosh" && <IoLogoAppleAppstore className='text-white' />}
-                    {item.platform.name === "Linux" && <FaLinux className='text-white' />}
-                    {item.platform.name === "Nintendo" && <BsNintendoSwitch className='text-white' />}
-                </span>
-              ))}
+    <div ref={container} className='m-10'>
+      {loading && dataGames ? (
+        <>
+          <p className='text-white font-extrabold text-[2.3rem] ml-3 mb-1 title'>
+            {dataGames.name}
+          </p>
+
+          <p className='text-white font-bold text-[1.3rem] mb-5 ml-3 rating'>
+            {`Rating count : ${dataGames.ratings_count || "N/A"} ⭐`}
+          </p>
+
+          <div className='flex gap-3 ml-3 mb-6'>
+            {dataGames.parent_platforms?.map((item, index) => (
+              <span key={index} className="text-[1.7rem] icon invisible">
+                {item.platform.name === "PC" && <FaSteam className='text-white' />}
+                {item.platform.name === "PlayStation" && <FaPlaystation className='text-white' />}
+                {item.platform.name === "Xbox" && <IoLogoXbox className='text-white' />}
+                {item.platform.name === "Android" && <IoLogoGooglePlaystore className='text-white' />}
+                {item.platform.name === "Apple Macintosh" && <IoLogoAppleAppstore className='text-white' />}
+                {item.platform.name === "Linux" && <FaLinux className='text-white' />}
+                {item.platform.name === "Nintendo" && <BsNintendoSwitch className='text-white' />}
+              </span>
+            ))}
           </div>
-          </>
-          ) : 
-        
-          (
-          <div className="space-y-4 ml-3 mb-10">
-            {/* Title Skeleton */}
-            <div className="h-12 w-1/2 rounded-lg bg-white/10 animate-pulse" />
-            
-            {/* Subtitle/Rating Skeleton */}
-            <div className="h-9 w-1/4 rounded-lg bg-white/5 animate-pulse" />
-            
-            {/* Platforms Icons Skeleton */}
-            <div className="flex gap-3">
-              {(dataGames.parent_platforms || [...Array(3)])?.map((i,index) => (
-                <div key={index} className="h-11 w-11 rounded-full bg-white/10 animate-pulse" />
-              ))}
-            </div>
+        </>
+      ) : (
+        <div className="space-y-4 ml-3 mb-10">
+          <div className="h-12 w-1/2 rounded-lg bg-white/10 animate-pulse" />
+          <div className="h-9 w-1/4 rounded-lg bg-white/5 animate-pulse" />
+          <div className="flex gap-3">
+            {[...Array(3)].map((_, index) => (
+              <div key={index} className="h-11 w-11 rounded-full bg-white/10 animate-pulse" />
+            ))}
           </div>
-          )
-        }
+        </div>
+      )}
 
-        <ImgeSlide id={page} />
+      {loading ? (
+        <div className='slides invisible translate-y-4'>
+          <ImgeSlide id={page} />
+        </div>
+      ) : (
+        <div className="h-150 w-full rounded-lg bg-white/5 animate-pulse" />
+      )}
 
-        {Loding ? (<div className='text-white py-8' dangerouslySetInnerHTML={{ __html: dataGames.description }} />) : (<div className="h-50 w-full rounded-lg bg-white/5 animate-pulse" />)}
+      <div className='slides invisible translate-y-4'>
+        <div className='text-white py-8' dangerouslySetInnerHTML={{ __html: dataGames?.description }} />
+      </div>
 
-        <SimilarGames id={page}></SimilarGames>
-
+      <div className='slides invisible translate-y-4'>
+        <SimilarGames id={page} />
+      </div>
     </div>
   )
 }
 
 export default Page
+

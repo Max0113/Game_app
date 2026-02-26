@@ -1,5 +1,6 @@
 import Sidebar from "@/Components/navigation/sidebar/Sidebar";
 import TopBar from '@/Components/navigation/top-bar/TopBar'
+import { WishlistProvider } from "@/Components/wlshlist/wlshlist";
 
 
 export const metadata = {
@@ -9,13 +10,15 @@ export const metadata = {
 
 export default function GridLayout({ children }) {
   return (
-    <div className="grid grid-cols-[270px_1fr] h-screen w-full max-lg:grid-cols-[90px_1fr] transition-all duration-200">
+    <div className="bg-[#9E3B3B] grid grid-cols-[270px_1fr] h-screen w-full max-lg:grid-cols-[90px_1fr] transition-all duration-200">
       <div className="shadow-lg">
         <Sidebar />
       </div>
       <div className="h-full overflow-y-auto">
         <TopBar></TopBar> 
-        {children}
+        <WishlistProvider>
+          {children}
+        </WishlistProvider>
       </div>
     </div>
   );
