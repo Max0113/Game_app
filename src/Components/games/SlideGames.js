@@ -16,7 +16,7 @@ import { IoMdAddCircleOutline } from "react-icons/io";
 
 function SlideGames({id , title , url , rating , platform}) {
   return (
-    <div className=' group w-80 relative '>
+    <div className=' group w-70 relative '>
       <div className='w-80 h-[360px] relative'>
         <Image 
           src={url} 
